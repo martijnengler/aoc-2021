@@ -3,7 +3,7 @@ $input = file('input', FILE_IGNORE_NEW_LINES);
 
 $input = array_map(fn($x) => str_split($x), $input);
 $half_size = count($input)/2;
-	$binary_length = count($input[0]);
+$binary_length = count($input[0]);
 $gamma = '';
 $epsilon = '';
 
