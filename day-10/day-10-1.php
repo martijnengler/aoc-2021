@@ -47,7 +47,15 @@ $closers = [
 	'>' => '<',
 ];
 
+$score = [
+	")" => 3,
+	"]" => 57,
+	"}" => 1197,
+	">" => 25137,
+];
+
 $o = [];
+$total = 0;
 foreach($lines as $key => $str)
 {
 	$chars = str_split($str);
@@ -62,9 +70,12 @@ foreach($lines as $key => $str)
 			$popped = array_pop($o);
 			if($popped !== $closers[$char])
 			{
-				printf("Fail in '%s'!\n", $str);
+				$total += $score[$char];
+				printf("%s\n", $score[$char]);
 				continue 2;
 			}
 		}
 	}
 }
+
+printf("%d\n", $total);
