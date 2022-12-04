@@ -17,10 +17,12 @@ class Octopus
 	public function increase()
 	{
 		$this->energy_level++;
+		/*
 		if($this->energy_level > 9)
 		{
 			$this->flash();
 		}
+		*/
 	}
 
 	public function flash()
