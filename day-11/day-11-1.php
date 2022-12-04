@@ -176,7 +176,7 @@ function step($octopi)
 				// it also flashes.
 				if($adj_fish->energy_level > 9)
 				{
-					$flashers[] = $fish;
+					$flashers[] = $adj_fish;
 				}
 			}
 		}
@@ -207,7 +207,7 @@ foreach($lines as $row => $val)
 	);
 }
 
-$how_many_steps = 1;
+$how_many_steps = 3;
 for($i = 0; $i < $how_many_steps; $i++)
 {
 	step($octopi);
