@@ -2,7 +2,7 @@
 <?php
 // https://adventofcode.com/2021/day/11
 define("TEST_MODE", true);
-//define("INPUT_FILE", "small-test");
+define("INPUT_FILE", "small-test");
 require_once __DIR__ . '/../init.php';
 
 class Octopus
