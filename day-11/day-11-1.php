@@ -175,8 +175,12 @@ foreach($lines as $row => $val)
 		array_values(str_split($val))
 	);
 }
-step($octopi);
-//step($octopi);
+
+$how_many_steps = 1;
+for($i = 0; $i < $how_many_steps; $i++)
+{
+	step($octopi);
+}
 
 $output = [];
 foreach($octopi as $row)
@@ -187,18 +191,63 @@ foreach($octopi as $row)
 	$output[] = implode("", $row);
 }
 
-$test_output = <<<'STR'
-6594254334
-3856965822
-6375667284
-7252447257
-7468496589
-5278635756
-3287952832
-7993992245
-5957959665
-6394862637
-STR;
+$test_outputs =
+[
+	// 0 steps
+	<<<'STR'
+	5483143223
+	2745854711
+	5264556173
+	6141336146
+	6357385478
+	4167524645
+	2176841721
+	6882881134
+	4846848554
+	5283751526
+	STR,
+	// 1 steps
+	<<<'STR'
+	6594254334
+	3856965822
+	6375667284
+	7252447257
+	7468496589
+	5278635756
+	3287952832
+	7993992245
+	5957959665
+	6394862637
+	STR,
+	// 2 steps
+	<<<'STR'
+	8807476555
+	5089087054
+	8597889608
+	8485769600
+	8700908800
+	6600088989
+	6800005943
+	0000007456
+	9000000876
+	8700006848
+	STR,
+	// 3 steps
+	<<<'STR'
+	0050900866
+	8500800575
+	9900000039
+	9700000041
+	9935080063
+	7712300000
+	7911250009
+	2211130000
+	0421125000
+	0021119000
+	STR,
+];
+
+$test_output = $test_outputs[$how_many_steps];
 $test_output = explode("\n", $test_output);
 
 printf("%s\n", $output[0]);
@@ -206,5 +255,5 @@ printf("%s\n", $test_output[0]);
 
 foreach($output as $k => $v)
 {
-	printf("%d: %d\n", $k, $output[$k] === $test_output[$k]);
+	printf("%d: %s\n", $k, $output[$k] === $test_output[$k] ? "OK" : "FAIL");
 }
