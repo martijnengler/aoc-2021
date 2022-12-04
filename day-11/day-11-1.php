@@ -284,15 +284,18 @@ $test_outputs =
 	STR,
 ];
 
-$test_output = $test_outputs[$how_many_steps];
-$test_output = explode("\n", $test_output);
-
-printf("%s\n", $output[0]);
-printf("%s\n", $test_output[0]);
-
-foreach($output as $k => $v)
+if(count($test_outputs) >= $how_many_steps)
 {
-	printf("%d: %s\n", $k, $output[$k] === $test_output[$k] ? "OK" : "FAIL");
+	$test_output = $test_outputs[$how_many_steps];
+	$test_output = explode("\n", $test_output);
+
+	printf("%s\n", $output[0]);
+	printf("%s\n", $test_output[0]);
+
+	foreach($output as $k => $v)
+	{
+		printf("%d: %s\n", $k, $output[$k] === $test_output[$k] ? "OK" : "FAIL");
+	}
 }
 
 printf("%d\n", $total_flashes);
