@@ -2,7 +2,7 @@
 <?php
 // https://adventofcode.com/2021/day/11
 define("TEST_MODE", true);
-define("INPUT_FILE", "adjacent-test");
+define("INPUT_FILE", "small-test");
 require_once __DIR__ . '/../init.php';
 
 class Octopus
@@ -115,38 +115,55 @@ function adjacentInArray(
 
 function step(&$octopi)
 {
+	$flashers = [];
+
 	// First, the energy level of each octopus increases by 1.
 	foreach($octopi as &$row)
 	{
 		foreach($row as &$fish)
 		{
 			$fish->increase();
-		}
-	}
-
-	// Any octopus with an energy level greater than 9 flashes
-	//
-	foreach($octopi as $idx_row => $row)
-	{
-		foreach($row as $idx_col => $fish)
-		{
-			if($fish->try_flash())
+			if($fish->energy_level > 9 && !$fish->flashed)
 			{
-				// This increases the energy level of all adjacent octopuses by 1,
-				// including octopuses that are diagonally adjacent.
+				$flashers[] = $fish;
 			}
 		}
 	}
-	// If this causes an octopus to have an energy level greater than 9,
-	// it also flashes.
-	//
+
+	while(count($flashers) > 0)
+	{
+		$fish = array_shift($flashers);
+		if($fish->try_flash())
+		{
+			// This increases the energy level of all adjacent octopuses by 1,
+			// including octopuses that are diagonally adjacent.
+			$adjacent = adjacentInArray($octopi, $fish->row, $fish->col);
+			foreach($adjacent as $adj_fish)
+			{
+				$adj_fish->increase();
+				// If this causes an octopus to have an energy level greater than 9,
+				// it also flashes.
+				if($adj_fish->energy_level > 9)
+				{
+					$flashers[] = $fish;
+				}
+			}
+		}
+	}
 	// This process continues as long as new octopuses keep having their energy
 	// level increased beyond 9.
 	//
 	// An octopus can only flash at most once per step.
-	//
+
 	// Finally, any octopus that flashed during this step has its energy level
 	// set to 0, as it used all of its energy to flash.
+	foreach($octopi as &$row)
+	{
+		foreach($row as &$fish)
+		{
+			$fish->cleanup();
+		}
+	}
 }
 
 $octopi = [];
@@ -167,6 +184,6 @@ foreach($octopi as $row)
 	$row = array_map(function($x) {
 		return $x->energy_level;
 	}, $row);
-	//print implode("", $row);
-	//print PHP_EOL;
+	print implode("-", $row);
+	print PHP_EOL;
 }
