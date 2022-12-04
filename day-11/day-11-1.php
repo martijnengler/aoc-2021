@@ -100,7 +100,7 @@ function adjacentInArray(
 	{
 		$try_row_idx = $row_idx + $d[0];
 		$try_col_idx = $col_idx + $d[1];
-		if(isset($options[$try_row_idx]) && isset($options[$try_row_idx][$try_col_idx]))
+		if(isset($arr[$try_row_idx]) && isset($arr[$try_row_idx][$try_col_idx]))
 		{
 			$output[] = $arr[$try_row_idx][$try_col_idx];
 		}
