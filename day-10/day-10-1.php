@@ -1,7 +1,7 @@
 #!/Users/martijnengler/.bin/php
 <?php
 // https://adventofcode.com/2021/day/10
-define("TEST_MODE", true);
+define("TEST_MODE", false);
 require_once __DIR__ . '/../init.php';
 
 function isLineComplete($str)
@@ -54,7 +54,7 @@ $score = [
 	">" => 25137,
 ];
 
-$o = [];
+$stack = [];
 $total = 0;
 foreach($lines as $key => $str)
 {
@@ -63,11 +63,11 @@ foreach($lines as $key => $str)
 	{
 		if(in_array($char, array_keys($openers)))
 		{
-			$o[] = $char;
+			$stack[] = $char;
 		}
 		else
 		{
-			$popped = array_pop($o);
+			$popped = array_pop($stack);
 			if($popped !== $closers[$char])
 			{
 				$total += $score[$char];
