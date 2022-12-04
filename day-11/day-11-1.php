@@ -47,4 +47,13 @@ foreach($lines as $key => $val)
 	$octopi[] = array_map(fn($x) => new Octopus($x), str_split($val));
 }
 
-print_r($octopi);
+step($octopi);
+
+foreach($octopi as $row)
+{
+	$row = array_map(function($x) {
+		return $x->energy_level;
+	}, $row);
+	print implode("", $row);
+	print PHP_EOL;
+}
