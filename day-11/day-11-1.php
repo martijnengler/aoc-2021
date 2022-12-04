@@ -2,6 +2,7 @@
 <?php
 // https://adventofcode.com/2021/day/11
 define("TEST_MODE", true);
+define("INPUT_FILE", "adjacent-test");
 require_once __DIR__ . '/../init.php';
 
 class Octopus
@@ -17,23 +18,100 @@ class Octopus
 	public function increase()
 	{
 		$this->energy_level++;
-		/*
-		if($this->energy_level > 9)
-		{
-			$this->flash();
-		}
-		*/
 	}
 
 	public function flash()
 	{
-		$this->energy_level = 0;
 		$this->flashed = true;
 	}
+
+	public function try_flash()
+	{
+		if($this->energy_level > 9 && !$this->flashed)
+		{
+			$this->flash();
+			return true;
+		}
+		return false;
+	}
+
+	public function cleanup()
+	{
+		$this->flashed = false;
+		if($this->energy_level > 9)
+			$this->energy_level = 0;
+	}
+}
+
+function adjacentInArray(
+	array $arr,
+	int $row_idx,
+	int $col_idx,
+	bool $vertical    = true,
+	bool $horizontal  = true,
+	bool $diagonal    = true,
+	bool $wrap_around = false
+)
+{
+	$options = [];
+
+	$vertical_directions = [
+		// vertical up
+		[1, 0],
+		// vertical down
+		[-1, 0],
+	];
+
+	$horizontal_directions = [
+		// horizontal right
+		[0, 1],
+		// horizontal left
+		[0, -1],
+	];
+
+	$diagonal_directions = [
+		// diagonal up right
+		[1, 1],
+		// diagonal up left
+		[1, -1],
+		// diagonal down right
+		[-1, 1],
+		// diagonal down left
+		[-1, -1]
+	];
+
+	if($vertical)
+	{
+		$options = array_merge($options, $vertical_directions);
+	}
+
+	if($horizontal)
+	{
+		$options = array_merge($options, $horizontal_directions);
+	}
+
+	if($diagonal)
+	{
+		$options = array_merge($options, $diagonal_directions);
+	}
+
+	$output = [];
+	foreach($options as $d)
+	{
+		$try_row_idx = $row_idx + $d[0];
+		$try_col_idx = $col_idx + $d[1];
+		if(isset($options[$try_row_idx]) && isset($options[$try_row_idx][$try_col_idx]))
+		{
+			$output[] = $arr[$try_row_idx][$try_col_idx];
+		}
+	}
+
+	return $output;
 }
 
 function step(&$octopi)
 {
+	// First, the energy level of each octopus increases by 1.
 	foreach($octopi as &$row)
 	{
 		foreach($row as &$fish)
@@ -41,6 +119,30 @@ function step(&$octopi)
 			$fish->increase();
 		}
 	}
+
+	// Any octopus with an energy level greater than 9 flashes
+	//
+	foreach($octopi as $idx_row => $row)
+	{
+		foreach($row as $idx_col => $fish)
+		{
+			if($fish->try_flash())
+			{
+				// This increases the energy level of all adjacent octopuses by 1,
+				// including octopuses that are diagonally adjacent.
+			}
+		}
+	}
+	// If this causes an octopus to have an energy level greater than 9,
+	// it also flashes.
+	//
+	// This process continues as long as new octopuses keep having their energy
+	// level increased beyond 9.
+	//
+	// An octopus can only flash at most once per step.
+	//
+	// Finally, any octopus that flashed during this step has its energy level
+	// set to 0, as it used all of its energy to flash.
 }
 
 $octopi = [];
@@ -49,6 +151,10 @@ foreach($lines as $key => $val)
 	$octopi[] = array_map(fn($x) => new Octopus($x), str_split($val));
 }
 
+var_dump(adjacentInArray($lines, 1, 1));
+exit;
+
+step($octopi);
 step($octopi);
 
 foreach($octopi as $row)
@@ -56,6 +162,6 @@ foreach($octopi as $row)
 	$row = array_map(function($x) {
 		return $x->energy_level;
 	}, $row);
-	print implode("", $row);
-	print PHP_EOL;
+	//print implode("", $row);
+	//print PHP_EOL;
 }
