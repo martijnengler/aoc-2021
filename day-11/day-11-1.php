@@ -9,10 +9,14 @@ class Octopus
 {
 	public int $energy_level;
 	public bool $flashed = false;
+	public int $row;
+	public int $col;
 
-	public function __construct(int $i)
+	public function __construct(int $level, int $row, int $col)
 	{
-		$this->energy_level = $i;
+		$this->energy_level = $level;
+		$this->row = $row;
+		$this->col = $col;
 	}
 
 	public function increase()
@@ -146,9 +150,13 @@ function step(&$octopi)
 }
 
 $octopi = [];
-foreach($lines as $key => $val)
+foreach($lines as $row => $val)
 {
-	$octopi[] = array_map(fn($x) => new Octopus($x), str_split($val));
+	$octopi[] = array_map(
+		fn($col, $level) => new Octopus($level, $row, $col),
+		array_keys(str_split($val)),
+		array_values(str_split($val))
+	);
 }
 
 step($octopi);
