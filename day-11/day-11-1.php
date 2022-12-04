@@ -113,14 +113,14 @@ function adjacentInArray(
 	return $output;
 }
 
-function step(&$octopi)
+function step($octopi)
 {
 	$flashers = [];
 
 	// First, the energy level of each octopus increases by 1.
-	foreach($octopi as &$row)
+	foreach($octopi as $row)
 	{
-		foreach($row as &$fish)
+		foreach($row as $fish)
 		{
 			$fish->increase();
 			if($fish->energy_level > 9 && !$fish->flashed)
@@ -159,7 +159,7 @@ function step(&$octopi)
 	// set to 0, as it used all of its energy to flash.
 	foreach($octopi as &$row)
 	{
-		foreach($row as &$fish)
+		foreach($row as $fish)
 		{
 			$fish->cleanup();
 		}
