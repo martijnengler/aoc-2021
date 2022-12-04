@@ -47,6 +47,32 @@ class Octopus
 	}
 }
 
+// quickly transform an array into something to output
+// e.g. input:
+//
+// [
+// 	[1, 2, 3]
+// 	[4, 5, 6]
+// ]
+//
+// output:
+//
+// 123
+// 456
+//
+// or with separator "*"
+// 1*2*3
+// 4*5*6
+function showMatrix(array $arr, string $separator = '')
+{
+	$output = '';
+	foreach($arr as $v)
+	{
+		$output .= implode($separator, $v) . PHP_EOL;
+	}
+	return $output;
+}
+
 function adjacentInArray(
 	array $arr,
 	int $row_idx,
