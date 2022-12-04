@@ -45,6 +45,11 @@ class Octopus
 		if($this->energy_level > 9)
 			$this->energy_level = 0;
 	}
+
+	public function __toString()
+	{
+		return (String)$this->energy_level;
+	}
 }
 
 // quickly transform an array into something to output
