@@ -175,15 +175,27 @@ foreach($lines as $row => $val)
 		array_values(str_split($val))
 	);
 }
-
 step($octopi);
 step($octopi);
 
+$output = [];
 foreach($octopi as $row)
 {
 	$row = array_map(function($x) {
 		return $x->energy_level;
 	}, $row);
-	print implode("-", $row);
-	print PHP_EOL;
+	$output[] = implode("", $row);
+}
+
+$test_output = <<<'STR'
+45654
+51115
+61116
+51115
+45654
+STR;
+$test_output = explode("\n", $test_output);
+foreach($output as $k => $v)
+{
+	printf("%d: %d\n", $k, $output[$k] === $test_output[$k]);
 }
