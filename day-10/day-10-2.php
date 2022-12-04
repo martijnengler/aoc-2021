@@ -79,4 +79,23 @@ foreach($lines as $key => $str)
 	$incomplete_lines[] = $str;
 }
 
-print_r($incomplete_lines);
+foreach($incomplete_lines as $key => $str)
+{
+	$stack = [];
+	$chars = str_split($str);
+	foreach($chars as $char)
+	{
+		if(in_array($char, array_keys($openers)))
+		{
+			$stack[] = $char;
+		}
+		else
+		{
+			$popped = array_pop($stack);
+		}
+	}
+	$reversed = array_reverse($stack);
+	$closed = array_map(fn($x) => array_flip($closers)[$x], $reversed);
+	print(implode("", $closed));
+	print PHP_EOL;
+}
