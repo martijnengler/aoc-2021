@@ -79,8 +79,14 @@ foreach($lines as $key => $str)
 	$incomplete_lines[] = $str;
 }
 
+$results = [];
+$score = 0;
+$total = 0;
+$score_map = array_flip(['', ')', ']', '}', '>']);
+print_r($score_map);
 foreach($incomplete_lines as $key => $str)
 {
+	$total = 0;
 	$stack = [];
 	$chars = str_split($str);
 	foreach($chars as $char)
@@ -96,6 +102,16 @@ foreach($incomplete_lines as $key => $str)
 	}
 	$reversed = array_reverse($stack);
 	$closed = array_map(fn($x) => array_flip($closers)[$x], $reversed);
-	print(implode("", $closed));
-	print PHP_EOL;
+	$score = 0;
+	foreach($closed as $val)
+	{
+		$score = $score_map[$val];
+		$total *= 5;
+		$total += $score;
+	}
+
+	$results[] = $total;
 }
+
+natsort($results);
+print_r($results);
