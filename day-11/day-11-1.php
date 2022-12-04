@@ -6,8 +6,8 @@ require_once __DIR__ . '/../init.php';
 
 class Octopus
 {
-	protected int $energy_level;
-	protected bool $flashed = false;
+	public int $energy_level;
+	public bool $flashed = false;
 
 	public function __construct(int $i)
 	{
