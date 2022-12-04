@@ -30,6 +30,17 @@ class Octopus
 	}
 }
 
+function step(&$octopi)
+{
+	foreach($octopi as &$row)
+	{
+		foreach($row as &$fish)
+		{
+			$fish->increase();
+		}
+	}
+}
+
 $octopi = [];
 foreach($lines as $key => $val)
 {
