@@ -3,3 +3,68 @@
 // https://adventofcode.com/2021/day/10
 define("TEST_MODE", true);
 require_once __DIR__ . '/../init.php';
+
+function isLineComplete($str)
+{
+	$chars = str_split($str);
+	asort($chars);
+
+	if(in_array('{', $chars) && !in_array('}', $chars))
+	{
+		return false;
+	}
+
+	if(in_array('[', $chars) && !in_array(']', $chars))
+	{
+		return false;
+	}
+
+	if(in_array('(', $chars) && !in_array(')', $chars))
+	{
+		return false;
+	}
+
+	if(in_array('<', $chars) && !in_array('>', $chars))
+	{
+		return false;
+	}
+
+	return true;
+	//print_r(array_count_values($chars));
+}
+
+$openers = [
+	'{' => 0,
+	'[' => 0,
+	'(' => 0,
+	'<' => 0,
+];
+
+$closers = [
+	'}' => '{',
+	']' => '[',
+	')' => '(',
+	'>' => '<',
+];
+
+$o = [];
+foreach($lines as $key => $str)
+{
+	$chars = str_split($str);
+	foreach($chars as $char)
+	{
+		if(in_array($char, array_keys($openers)))
+		{
+			$o[] = $char;
+		}
+		else
+		{
+			$popped = array_pop($o);
+			if($popped !== $closers[$char])
+			{
+				printf("Fail in '%s'!\n", $str);
+				continue 2;
+			}
+		}
+	}
+}
