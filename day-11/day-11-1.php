@@ -33,8 +33,7 @@ class Octopus
 $octopi = [];
 foreach($lines as $key => $val)
 {
-	$to_add = array_map(fn($x) => new Octopus($x), str_split($val));
-	$octopi = array_merge($octopi, $to_add);
+	$octopi[] = array_map(fn($x) => new Octopus($x), str_split($val));
 }
 
 print_r($octopi);
