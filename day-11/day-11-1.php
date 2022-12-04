@@ -151,7 +151,9 @@ foreach($lines as $key => $val)
 	$octopi[] = array_map(fn($x) => new Octopus($x), str_split($val));
 }
 
-var_dump(adjacentInArray($lines, 1, 1));
+$a= adjacentInArray($lines, 1, 1);
+natsort($a);
+print_r($a);
 exit;
 
 step($octopi);
