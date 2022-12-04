@@ -5,6 +5,8 @@ define("TEST_MODE", true);
 //define("INPUT_FILE", "small-test");
 require_once __DIR__ . '/../init.php';
 
+$total_flashes = 0;
+
 class Octopus
 {
 	public int $energy_level;
@@ -146,6 +148,8 @@ function adjacentInArray(
 
 function step($octopi)
 {
+	global $total_flashes;
+
 	$flashers = [];
 
 	// First, the energy level of each octopus increases by 1.
@@ -166,6 +170,8 @@ function step($octopi)
 		$fish = array_shift($flashers);
 		if($fish->try_flash())
 		{
+			$total_flashes++;
+
 			// This increases the energy level of all adjacent octopuses by 1,
 			// including octopuses that are diagonally adjacent.
 			$adjacent = adjacentInArray($octopi, $fish->row, $fish->col);
@@ -207,7 +213,7 @@ foreach($lines as $row => $val)
 	);
 }
 
-$how_many_steps = 3;
+$how_many_steps = 100;
 for($i = 0; $i < $how_many_steps; $i++)
 {
 	step($octopi);
@@ -288,3 +294,5 @@ foreach($output as $k => $v)
 {
 	printf("%d: %s\n", $k, $output[$k] === $test_output[$k] ? "OK" : "FAIL");
 }
+
+printf("%d\n", $total_flashes);
