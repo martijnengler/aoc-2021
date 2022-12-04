@@ -113,5 +113,8 @@ foreach($incomplete_lines as $key => $str)
 	$results[] = $total;
 }
 
+$cnt = count($results);
+
 natsort($results);
 print_r($results);
+print_r(array_slice($results, floor($cnt/2), 1));
