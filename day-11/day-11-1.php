@@ -2,7 +2,7 @@
 <?php
 // https://adventofcode.com/2021/day/11
 define("TEST_MODE", true);
-define("INPUT_FILE", "small-test");
+//define("INPUT_FILE", "small-test");
 require_once __DIR__ . '/../init.php';
 
 class Octopus
@@ -176,7 +176,7 @@ foreach($lines as $row => $val)
 	);
 }
 step($octopi);
-step($octopi);
+//step($octopi);
 
 $output = [];
 foreach($octopi as $row)
@@ -188,13 +188,22 @@ foreach($octopi as $row)
 }
 
 $test_output = <<<'STR'
-45654
-51115
-61116
-51115
-45654
+6594254334
+3856965822
+6375667284
+7252447257
+7468496589
+5278635756
+3287952832
+7993992245
+5957959665
+6394862637
 STR;
 $test_output = explode("\n", $test_output);
+
+printf("%s\n", $output[0]);
+printf("%s\n", $test_output[0]);
+
 foreach($output as $k => $v)
 {
 	printf("%d: %d\n", $k, $output[$k] === $test_output[$k]);
