@@ -112,7 +112,7 @@ function calculateExits($cave, $chain = [], &$exits_tried = [])
 
 	$exits = array_filter(
 		$exits,
-		fn($x) => !in_array($x, $exits_tried) || !$cave->canBeVisited(),
+		fn($x) => !in_array($x, $exits_tried) && $cave->canBeVisited(),
 		ARRAY_FILTER_USE_KEY
 	);
 
