@@ -17,10 +17,10 @@ class Cave
 	public function __construct($s)
 	{
 		$this->identifier = $s;
-		$this->small      = strtolower($s) === $s;
-		$this->large      = !$this->small;
-		$this->start      = $this->identifier === 'start';
-		$this->end        = $this->identifier === 'end';
+		$this->small      = (strtolower($s) === $s);
+		$this->large      = !($this->small);
+		$this->start      = ($this->identifier === 'start');
+		$this->end        = ($this->identifier === 'end');
 	}
 
 	public function canBeVisited()
@@ -28,12 +28,41 @@ class Cave
 		return ($this->large || !$this->visited);
 	}
 
-	public function addPathWay(Cave $exit, bool $add_two_way = true)
+	public function addPathWay(Cave &$exit, bool $add_two_way = true)
 	{
 		$this->exits[] = $exit;
 		if($add_two_way)
 		{
-			$exit->addPathWay(&$this, false);
+			$exit->addPathWay($this, false);
 		}
 	}
+
+	public function __toString()
+	{
+		return $this->identifier;
+	}
 }
+
+function addCave(&$caves, $a)
+{
+	$identifiers = array_map(fn($x) => (String)$x, $caves);
+	if(!in_array($a, $identifiers))
+	{
+		$caves[] = new Cave($a);
+	}
+}
+// first look for all the identifiers and create caves
+$lines_split_by_dashes = array_map(fn($x) => explode('-', $x), $lines);
+
+$caves = [];
+foreach($lines_split_by_dashes as $line)
+{
+	list($a, $b) = $line;
+
+	addCave($caves, $a);
+	addCave($caves, $b);
+}
+
+var_dump($caves);
+
+// next, add the exits between the caves
