@@ -83,10 +83,15 @@ foreach($lines_split_by_dashes as $line)
 $start = findCave($caves, 'start');
 
 $exits_tried = [];
-var_dump(implode(",", calculateExits($start, [], $exits_tried)));
-var_dump(implode(",", calculateExits($start, [], $exits_tried)));
-var_dump(implode(",", calculateExits($start, [], $exits_tried)));
-var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+
+for($j = 0; $j < 10; $j++)
+{
+	var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+	foreach($caves as $c)
+	{
+		$c->visited = false;
+	}
+}
 
 $i = 0;
 function calculateExits($cave, $chain = [], &$exits_tried = [])
@@ -112,8 +117,8 @@ function calculateExits($cave, $chain = [], &$exits_tried = [])
 
 	$exits = array_filter(
 		$exits,
-		fn($x) => !in_array($x, $exits_tried) && $cave->canBeVisited(),
-		ARRAY_FILTER_USE_KEY
+		fn($val, $key) => !in_array($key, $exits_tried) && $val->canBeVisited(),
+		ARRAY_FILTER_USE_BOTH
 	);
 
 	if(empty($exits))
