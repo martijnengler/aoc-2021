@@ -78,3 +78,9 @@ foreach($lines_split_by_dashes as $line)
 	$a->addPathWay($b, false);
 	$b->addPathWay($a, false);
 }
+
+$start = findCave($caves, 'start');
+foreach($start->exits as $potential_exit)
+{
+	print $potential_exit . PHP_EOL;
+}
