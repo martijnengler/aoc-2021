@@ -25,7 +25,7 @@ class Cave
 
 	public function canBeVisited()
 	{
-		return ($this->large || !$this->visited);
+		return ($this->large || $this->end || !$this->visited);
 	}
 
 	public function addPathWay(Cave &$exit, bool $add_two_way = true)
