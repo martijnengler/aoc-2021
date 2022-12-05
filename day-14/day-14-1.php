@@ -1,7 +1,7 @@
 #!/Users/martijnengler/.bin/php
 <?php
 // https://adventofcode.com/2021/day/14
-define("TEST_MODE", true);
+define("TEST_MODE", false);
 require_once __DIR__ . '/../init.php';
 $template = array_shift($lines);
 array_shift($lines);
