@@ -20,7 +20,6 @@ foreach($lines as $line)
 	list($a,$b) = explode(" -> ", $line);
 	$mapping[$a] = $b;
 }
-print_r($mapping);
 
 $do_steps = 10;
 for($i = 0; $i < $do_steps; $i++)
@@ -49,6 +48,4 @@ for($i = 0; $i < $do_steps; $i++)
 	$template = implode("", $chars);
 }
 
-print 'NBCCNBBBCBHCB';
-print "\n";
 print(strlen(implode("", $chars)));
