@@ -82,10 +82,12 @@ foreach($lines_split_by_dashes as $line)
 
 $start = findCave($caves, 'start');
 
-var_dump(implode(",", calculateExits($start)));
+$exits_tried = [];
+var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+var_dump(implode(",", calculateExits($start, [], $exits_tried)));
 
 $i = 0;
-function calculateExits($cave, $chain = [], $exits_tried = [])
+function calculateExits($cave, $chain = [], &$exits_tried = [])
 {
 	global $i;
 	$i++;
