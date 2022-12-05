@@ -1,13 +1,5 @@
 #!/Users/martijnengler/.bin/php
 <?php
-
-/*
-$a = [1,2,3];
-array_splice($a, 1, 0, '4');
-print_r($a);
-exit;
- */
-
 // https://adventofcode.com/2021/day/14
 define("TEST_MODE", true);
 require_once __DIR__ . '/../init.php';
