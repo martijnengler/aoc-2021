@@ -6,13 +6,13 @@ require_once __DIR__ . '/../init.php';
 
 class Cave
 {
-	protected bool $small;
-	protected bool $large;
-	protected string $identifier;
-	protected array $exits  = [];
-	protected bool $visited = false;
-	protected bool $start   = false;
-	protected bool $end     = false;
+	public bool $small;
+	public bool $large;
+	public string $identifier;
+	public array $exits  = [];
+	public bool $visited = false;
+	public bool $start   = false;
+	public bool $end     = false;
 
 	public function __construct($s)
 	{
