@@ -80,7 +80,41 @@ foreach($lines_split_by_dashes as $line)
 }
 
 $start = findCave($caves, 'start');
-foreach($start->exits as $potential_exit)
+
+var_dump(implode(",", calculateExits($start)));
+
+$i = 0;
+function calculateExits($cave, $chain = [])
 {
-	print $potential_exit . PHP_EOL;
+	global $i;
+	$i++;
+
+	if($i > 100)
+	{
+		print $i;
+		exit;
+	}
+
+	$chain[] = (String)$cave;
+
+	$exits = array_values($cave->exits);
+
+	if($cave->identifier === "end")
+	{
+		return $chain;
+	}
+
+	// check exits until either…
+	if($cave->identifier === 'start')
+	{
+		$idx = 1;
+	}
+	else
+	{
+		$idx = 3;
+	}
+	return calculateExits($exits[$idx], $chain);
+	// we hit "END"
+	// or we can't "visit"
+	// keep a list of every cave we see along the way
 }
