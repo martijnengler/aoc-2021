@@ -84,27 +84,23 @@ $start = findCave($caves, 'start');
 
 $exits_tried = [];
 
+$output = [];
 for($j = 0; $j < 10; $j++)
 {
-	var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+	$output[] = (implode(",", calculateExits($start, [], $exits_tried)));
 	foreach($caves as $c)
 	{
 		$c->visited = false;
 	}
 }
 
-$i = 0;
+print implode(PHP_EOL, array_filter($output, function($x){
+	return str_ends_with($x, ',end');
+}));
+
+
 function calculateExits($cave, $chain = [], &$exits_tried = [])
 {
-	global $i;
-	$i++;
-
-	if($i > 100)
-	{
-		print $i;
-		exit;
-	}
-
 	$chain[] = (String)$cave;
 
 	$exits = $cave->exits;
