@@ -51,6 +51,13 @@ function addCave(&$caves, $a)
 		$caves[] = new Cave($a);
 	}
 }
+
+function findCave($caves, $identifier)
+{
+	$cave_idx = array_search($identifier, $caves);
+	return $caves[$cave_idx];
+}
+
 // first look for all the identifiers and create caves
 $lines_split_by_dashes = array_map(fn($x) => explode('-', $x), $lines);
 
@@ -66,6 +73,7 @@ foreach($lines_split_by_dashes as $line)
 // next, add the exits between the caves
 foreach($lines_split_by_dashes as $line)
 {
-	$cave_idx = array_search($line[0], $caves);
-	print $caves[$cave_idx] . PHP_EOL;
+	$a = findCave($caves, $line[0]);
+	$b = findCave($caves, $line[1]);
+	$a->addPathWay($b);
 }
