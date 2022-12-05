@@ -63,6 +63,9 @@ foreach($lines_split_by_dashes as $line)
 	addCave($caves, $b);
 }
 
-var_dump($caves);
-
 // next, add the exits between the caves
+foreach($lines_split_by_dashes as $line)
+{
+	$cave_idx = array_search($line[0], $caves);
+	print $caves[$cave_idx] . PHP_EOL;
+}
