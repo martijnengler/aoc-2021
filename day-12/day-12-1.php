@@ -110,13 +110,12 @@ function calculateExits($cave, $chain = [], &$exits_tried = [])
 		return $chain;
 	}
 
-	// or we can't "visit"
-	if(!$cave->canBeVisited() && $cave->identifier !== 'start')
-	{
-		return $chain;
-	}
+	$exits = array_filter(
+		$exits,
+		fn($x) => !in_array($x, $exits_tried) || !$cave->canBeVisited(),
+		ARRAY_FILTER_USE_KEY
+	);
 
-	$exits = array_filter($exits, fn($x) => !in_array($x, $exits_tried), ARRAY_FILTER_USE_KEY);
 	if(empty($exits))
 	{
 		return $chain;
