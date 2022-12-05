@@ -96,25 +96,35 @@ function calculateExits($cave, $chain = [])
 	}
 
 	$chain[] = (String)$cave;
+	$cave->visited = true;
 
 	$exits = array_values($cave->exits);
 
+	// we hit "END"
 	if($cave->identifier === "end")
 	{
 		return $chain;
 	}
 
+	// or we can't "visit"
+	if(!$cave->canBeVisited())
+	{
+		//return $chain;
+	}
+
 	// check exits until either…
 	if($cave->identifier === 'start')
 	{
-		$idx = 1;
+		$idx = 0;
+	}
+	elseif($cave->identifier === 'A')
+	{
+		var_dump($cave->exits);
+		$idx = 2;
 	}
 	else
 	{
 		$idx = 3;
 	}
 	return calculateExits($exits[$idx], $chain);
-	// we hit "END"
-	// or we can't "visit"
-	// keep a list of every cave we see along the way
 }
