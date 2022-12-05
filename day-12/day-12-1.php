@@ -75,5 +75,6 @@ foreach($lines_split_by_dashes as $line)
 {
 	$a = findCave($caves, $line[0]);
 	$b = findCave($caves, $line[1]);
-	$a->addPathWay($b);
+	$a->addPathWay($b, false);
+	$b->addPathWay($a, false);
 }
