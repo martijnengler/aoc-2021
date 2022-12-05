@@ -48,4 +48,4 @@ for($i = 0; $i < $do_steps; $i++)
 	$template = implode("", $chars);
 }
 
-print(strlen(implode("", $chars)));
+print (max(array_count_values($chars)) - min(array_count_values($chars)));
