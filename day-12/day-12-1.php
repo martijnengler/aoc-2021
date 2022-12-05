@@ -28,13 +28,14 @@ class Cave
 		return ($this->large || $this->end || !$this->visited);
 	}
 
-	public function addPathWay(Cave &$exit, bool $add_two_way = true)
+	public function addPathWay(Cave &$exit)
 	{
-		$this->exits[] = $exit;
-		if($add_two_way)
+		// never go back to start
+		if($exit->identifier === 'start')
 		{
-			$exit->addPathWay($this, false);
+			return;
 		}
+		$this->exits[$this->identifier . '_' . $exit->identifier] = $exit;
 	}
 
 	public function __toString()
@@ -75,8 +76,8 @@ foreach($lines_split_by_dashes as $line)
 {
 	$a = findCave($caves, $line[0]);
 	$b = findCave($caves, $line[1]);
-	$a->addPathWay($b, false);
-	$b->addPathWay($a, false);
+	$a->addPathWay($b);
+	$b->addPathWay($a);
 }
 
 $start = findCave($caves, 'start');
@@ -84,7 +85,7 @@ $start = findCave($caves, 'start');
 var_dump(implode(",", calculateExits($start)));
 
 $i = 0;
-function calculateExits($cave, $chain = [])
+function calculateExits($cave, $chain = [], $exits_tried = [])
 {
 	global $i;
 	$i++;
@@ -96,9 +97,8 @@ function calculateExits($cave, $chain = [])
 	}
 
 	$chain[] = (String)$cave;
-	$cave->visited = true;
 
-	$exits = array_values($cave->exits);
+	$exits = $cave->exits;
 
 	// we hit "END"
 	if($cave->identifier === "end")
@@ -107,24 +107,15 @@ function calculateExits($cave, $chain = [])
 	}
 
 	// or we can't "visit"
-	if(!$cave->canBeVisited())
+	if(!$cave->canBeVisited() && $cave->identifier !== 'start')
 	{
-		//return $chain;
+		return $chain;
 	}
 
-	// check exits until either…
-	if($cave->identifier === 'start')
-	{
-		$idx = 0;
-	}
-	elseif($cave->identifier === 'A')
-	{
-		var_dump($cave->exits);
-		$idx = 2;
-	}
-	else
-	{
-		$idx = 3;
-	}
-	return calculateExits($exits[$idx], $chain);
+	$exits = array_filter($exits, fn($x) => !in_array($x, $exits_tried), ARRAY_FILTER_USE_KEY);
+	$idx = array_keys($exits)[0];
+	$exits_tried[] = $idx;
+
+	$cave->visited = true;
+	return calculateExits($exits[$idx], $chain, $exits_tried);
 }
