@@ -85,6 +85,8 @@ $start = findCave($caves, 'start');
 $exits_tried = [];
 var_dump(implode(",", calculateExits($start, [], $exits_tried)));
 var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+var_dump(implode(",", calculateExits($start, [], $exits_tried)));
+var_dump(implode(",", calculateExits($start, [], $exits_tried)));
 
 $i = 0;
 function calculateExits($cave, $chain = [], &$exits_tried = [])
@@ -115,6 +117,10 @@ function calculateExits($cave, $chain = [], &$exits_tried = [])
 	}
 
 	$exits = array_filter($exits, fn($x) => !in_array($x, $exits_tried), ARRAY_FILTER_USE_KEY);
+	if(empty($exits))
+	{
+		return $chain;
+	}
 	$idx = array_keys($exits)[0];
 	$exits_tried[] = $idx;
 
