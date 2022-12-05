@@ -22,7 +22,7 @@ foreach($lines as $line)
 }
 print_r($mapping);
 
-$do_steps = 2;
+$do_steps = 10;
 for($i = 0; $i < $do_steps; $i++)
 {
 	$geefditeennaam = 0;
@@ -51,4 +51,4 @@ for($i = 0; $i < $do_steps; $i++)
 
 print 'NBCCNBBBCBHCB';
 print "\n";
-print(implode("", $chars));
+print(strlen(implode("", $chars)));
