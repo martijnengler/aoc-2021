@@ -33,16 +33,20 @@ class Node
 }
 
 /* Building Graph */
-$root = new Node('root');
-foreach (range(1, 6) as $v) {
-	$name = "node{$v}";
-	$$name = new Node($name);
-}
-$root->link_to($node1)->link_to($node2);
-$node1->link_to($node3)->link_to($node4);
-$node2->link_to($node5)->link_to($node6);
-$node4->link_to($node5);
+$start = new Node('start');
+$node_a = new Node('A');
+$node_b = new Node('b');
+$node_c = new Node('c');
+$node_d = new Node('d');
+$end = new Node('end');
 
+$start->link_to($node_a);
+$start->link_to($node_b);
+$node_a->link_to($node_b);
+$node_a->link_to($node_c);
+$node_b->link_to($node_d);
+$node_a->link_to($end);
+$node_b->link_to($end);
 
 /* Searching Path */
 function dfs(Node $node, $path = '', $visited = array())
@@ -50,13 +54,13 @@ function dfs(Node $node, $path = '', $visited = array())
 	$visited[] = $node->name;
 	$not_visited = $node->not_visited_nodes($visited);
 	if (empty($not_visited)) {
-		echo 'path : ' . $path . '->' . $node->name . PHP_EOL;
+		echo ltrim($path . ',' . $node->name . PHP_EOL, ',');
 		return;
 	}
-	foreach ($not_visited as $n) dfs($n, $path . '->' . $node->name, $visited);
+	foreach ($not_visited as $n) dfs($n, $path . ',' . $node->name, $visited);
 }
 
-dfs($root);
+dfs($start);
 // path : ->root->node1->node3
 // path : ->root->node1->node4->node5->node2->node6
 // path : ->root->node2->node5->node4->node1->node3
