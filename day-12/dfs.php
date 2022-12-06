@@ -49,18 +49,21 @@ $node_a->link_to($end);
 $node_b->link_to($end);
 
 /* Searching Path */
+$output = [];
 function dfs(Node $node, $path = '', $visited = array())
 {
+	global $output;
 	$visited[] = $node->name;
 	$not_visited = $node->not_visited_nodes($visited);
 	if (empty($not_visited)) {
-		echo ltrim($path . ',' . $node->name . PHP_EOL, ',');
+		$output[] = ltrim($path . ',' . $node->name . PHP_EOL, ',');
 		return;
 	}
 	foreach ($not_visited as $n) dfs($n, $path . ',' . $node->name, $visited);
 }
 
 dfs($start);
+print_r(array_filter($output, fn($x) => preg_match('/end$/', $x)));
 // path : ->root->node1->node3
 // path : ->root->node1->node4->node5->node2->node6
 // path : ->root->node2->node5->node4->node1->node3
