@@ -74,6 +74,7 @@ function dfs(Node $node, $path = '', $visited = array())
 	global $output;
 
 	$visited[] = $node->name;
+
 	$not_visited = $node->not_visited_nodes($visited);
 
 	if(empty($not_visited))
