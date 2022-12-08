@@ -8,11 +8,18 @@ use Ds\Set;
 
 require_once 'day-15-1.php';
 
+function graphcost($a, $b)
+{
+	return $a->value + $b->value;
+}
+
 $start = $lines[0][0];
-$frontier = new Queue();
-$frontier->push($lines[0][0]);
+$frontier = new PriorityQueue();
+$frontier->push($lines[0][0], 0);
 $came_from = [];
+$cost_so_far = [];
 $came_from[$lines[0][0]->asArrayKey()] = null;
+$cost_so_far[$start->asArrayKey()] = 0;
 $goal = $lines[3][3];
 
 while(!empty($frontier->toArray()))
@@ -27,9 +34,12 @@ while(!empty($frontier->toArray()))
 	$adj = adjacentInArray($lines, $current->row, $current->col, true, true, false);
 	foreach($adj as $next)
 	{
-		if(!in_array($next, $came_from))
+		$new_cost = $cost_so_far[$current->asArrayKey()] + graphcost($current, $next);
+		if(!in_array($next, $came_from) || $new_cost < $cost_so_far[$next->asArrayKey()])
 		{
-			$frontier->push($next);
+			$cost_so_far[$next->asArrayKey()] = $new_cost;
+			$priority = $new_cost;
+			$frontier->push($next, $priority);
 			$came_from[$next->asArrayKey()] = $current;
 		}
 	}
