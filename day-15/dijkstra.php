@@ -5,19 +5,34 @@
 use Ds\Queue;
 use Ds\PriorityQueue;
 
-/*
-frontier = Queue()
-frontier.put(start )
-reached = set()
-reached.add(start)
+require_once 'day-15-1.php';
 
+$frontier = new Queue();
+$frontier->push($lines[0][0]);
+$reached = [];
+$reached[] = $lines[0][0];
+
+while(!empty($frontier))
+{
+	$current = $frontier->pop();
+	foreach(adjacentInArray($lines, $current) as $next)
+	{
+		if(!in_array($next, $reached))
+		{
+			$frontier->push($next);
+			$reached[] = $next;
+		}
+	}
+}
+
+/*
 while not frontier.empty():
 	current = frontier.get()
 	for next in graph.neighbors(current):
 		if next not in reached:
 			frontier.put(next)
 			reached.add(next)
- */
+*/
 
 /*
 frontier = PriorityQueue()
