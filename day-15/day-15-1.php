@@ -26,6 +26,11 @@ class AocNode
 	{
 		return sprintf('[%d, %d]: %d', $this->row, $this->col, $this->value);
 	}
+
+	public function asArraykey()
+	{
+		return sprintf('%d_%d', $this->row, $this->col);
+	}
 }
 
 // convert the numbers into AocNode

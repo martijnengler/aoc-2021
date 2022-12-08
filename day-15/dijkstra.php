@@ -8,49 +8,44 @@ use Ds\Set;
 
 require_once 'day-15-1.php';
 
+$start = $lines[0][0];
 $frontier = new Queue();
 $frontier->push($lines[0][0]);
-$reached = new Set();
-$reached->add($lines[0][0]);
+$came_from = [];
+$came_from[$lines[0][0]->asArrayKey()] = null;
+$goal = $lines[2][2];
 
 while(!empty($frontier->toArray()))
 {
 	$current = $frontier->pop();
+
+	if($current == $goal)
+		break;
+
 	// only horizontal / vertical, not diagonal
 	// might need to make that the default actually
 	$adj = adjacentInArray($lines, $current->row, $current->col, true, true, false);
 	foreach($adj as $next)
 	{
-		if(!$reached->contains($next))
+		if(!in_array($next, $came_from))
 		{
 			$frontier->push($next);
-			$reached->add($next);
+			$came_from[$next->asArrayKey()] = $current;
 		}
 	}
 }
 
-$original_lines = file($input_filename, FILE_IGNORE_NEW_LINES);
-foreach($original_lines as &$val)
+$current = $goal;
+$path = [];
+while($current != $start)
 {
-	$val = str_split($val);
+	$path[] = $current;
+	$current = $came_from[$current->asArrayKey()];
 }
-
-/*
-	Should have read this part before trying to debug:
-
-	This loop is the essence of the graph search algorithms on this page, including A*. But how do we find the shortest path? The loop doesn’t actually construct the paths; it only tells us how to visit everything on the map.
- */
-foreach($reached as $key => $x)
-{
-	$copyLines = $original_lines;
-	$copyLines[$x->row][$x->col] = 'X';
-	print showMatrix($copyLines);
-	print PHP_EOL;
-	print PHP_EOL;
-
-	if($key > 1)
-		break;
-}
+$path[] = $start;
+print implode(" => ", array_reverse($path));
+exit;
+# optional
 
 /*
 frontier = PriorityQueue()
@@ -74,3 +69,26 @@ while not frontier.empty():
          frontier.put(next, priority)
          came_from[next] = current
 */
+
+$original_lines = file($input_filename, FILE_IGNORE_NEW_LINES);
+foreach($original_lines as &$val)
+{
+	$val = str_split($val);
+}
+
+/*
+	Should have read this part before trying to debug:
+
+	This loop is the essence of the graph search algorithms on this page, including A*. But how do we find the shortest path? The loop doesn’t actually construct the paths; it only tells us how to visit everything on the map.
+ */
+foreach($came_from as $x)
+{
+	if($x === null)
+		continue;
+
+	$copyLines = $original_lines;
+	$o = $copyLines[$x->row][$x->col];
+	$copyLines[$x->row][$x->col] = 'X';
+	print_r($copyLines);
+	$copyLines[$x->row][$x->col] = $o;
+}
