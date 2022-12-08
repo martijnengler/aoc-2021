@@ -21,6 +21,11 @@ class AocNode
 	{
 
 	}
+
+	public function __toString()
+	{
+		return sprintf('[%d, %d]: %d', $this->row, $this->col, $this->value);
+	}
 }
 
 // convert the numbers into AocNode
