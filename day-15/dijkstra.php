@@ -13,7 +13,7 @@ $frontier = new Queue();
 $frontier->push($lines[0][0]);
 $came_from = [];
 $came_from[$lines[0][0]->asArrayKey()] = null;
-$goal = $lines[2][2];
+$goal = $lines[3][3];
 
 while(!empty($frontier->toArray()))
 {
@@ -43,7 +43,7 @@ while($current != $start)
 	$current = $came_from[$current->asArrayKey()];
 }
 $path[] = $start;
-print implode(" => ", array_reverse($path));
+print implode(" => \n", array_reverse($path));
 exit;
 # optional
 

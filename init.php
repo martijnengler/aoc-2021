@@ -7,6 +7,6 @@ if(defined('INPUT_FILE'))
 }
 else
 {
-	$input_filename .= (defined('TEST_MODE') && TEST_MODE) ? 'smalltest' : 'input';
+	$input_filename .= (defined('TEST_MODE') && TEST_MODE) ? 'test' : 'input';
 }
 $lines = file($input_filename, FILE_IGNORE_NEW_LINES);
