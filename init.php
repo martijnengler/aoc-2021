@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../lib/php/libinit.php';
 $input_filename = dirname($argv[0]) . DIRECTORY_SEPARATOR . '/';
 if(defined('INPUT_FILE'))
 {
