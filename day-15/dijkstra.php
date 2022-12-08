@@ -12,10 +12,13 @@ $frontier->push($lines[0][0]);
 $reached = [];
 $reached[] = $lines[0][0];
 
-while(!empty($frontier))
+while(!empty($frontier->toArray()))
 {
 	$current = $frontier->pop();
-	foreach(adjacentInArray($lines, $current) as $next)
+	// only horizontal / vertical, not diagonal
+	// might need to make that the default actually
+	$adj = adjacentInArray($lines, $current->row, $current->col, true, true, false);
+	foreach($adj as $next)
 	{
 		if(!in_array($next, $reached))
 		{
