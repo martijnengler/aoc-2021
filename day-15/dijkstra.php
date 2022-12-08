@@ -4,13 +4,14 @@
 
 use Ds\Queue;
 use Ds\PriorityQueue;
+use Ds\Set;
 
 require_once 'day-15-1.php';
 
 $frontier = new Queue();
 $frontier->push($lines[0][0]);
-$reached = [];
-$reached[] = $lines[0][0];
+$reached = new Set();
+$reached->add($lines[0][0]);
 
 while(!empty($frontier->toArray()))
 {
@@ -20,15 +21,38 @@ while(!empty($frontier->toArray()))
 	$adj = adjacentInArray($lines, $current->row, $current->col, true, true, false);
 	foreach($adj as $next)
 	{
-		if(!in_array($next, $reached))
+		if(!$reached->contains($next))
 		{
 			$frontier->push($next);
-			$reached[] = $next;
+			$reached->add($next);
 		}
 	}
 }
 
+$original_lines = file($input_filename, FILE_IGNORE_NEW_LINES);
+foreach($original_lines as &$val)
+{
+	$val = str_split($val);
+}
+
+foreach($reached as $key => $x)
+{
+	$copyLines = $original_lines;
+	$copyLines[$x->row][$x->col] = 'X';
+	print showMatrix($copyLines);
+	print PHP_EOL;
+	print PHP_EOL;
+
+	if($key > 1)
+		break;
+}
+
 /*
+frontier = Queue()
+frontier.put(start )
+reached = set()
+reached.add(start)
+
 while not frontier.empty():
 	current = frontier.get()
 	for next in graph.neighbors(current):
