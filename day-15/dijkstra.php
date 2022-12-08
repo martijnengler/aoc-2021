@@ -35,7 +35,10 @@ while(!empty($frontier->toArray()))
 	foreach($adj as $next)
 	{
 		$new_cost = $cost_so_far[$current->asArrayKey()] + graphcost($current, $next);
-		if(!in_array($next, $came_from) || $new_cost < $cost_so_far[$next->asArrayKey()])
+		if(
+			!in_array($next->asArrayKey(), array_keys($cost_so_far))
+			|| $new_cost < $cost_so_far[$next->asArrayKey()]
+		)
 		{
 			$cost_so_far[$next->asArrayKey()] = $new_cost;
 			$priority = $new_cost;
