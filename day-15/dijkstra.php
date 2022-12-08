@@ -35,6 +35,11 @@ foreach($original_lines as &$val)
 	$val = str_split($val);
 }
 
+/*
+	Should have read this part before trying to debug:
+
+	This loop is the essence of the graph search algorithms on this page, including A*. But how do we find the shortest path? The loop doesn’t actually construct the paths; it only tells us how to visit everything on the map.
+ */
 foreach($reached as $key => $x)
 {
 	$copyLines = $original_lines;
