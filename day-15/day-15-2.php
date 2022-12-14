@@ -33,10 +33,6 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-// TODO: this assumed we start with a 10x10 grid,
-// but for real input we start with a 100x100
-//
-// so we need to actually do the work to expand this the right way
 $original_count = count($lines);
 
 reset($lines);
