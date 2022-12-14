@@ -17,6 +17,9 @@ function copyRow($row)
 	}, $row);
 }
 
+
+$blocks = [];
+
 foreach($lines as &$line)
 {
 	$copies = [];
@@ -34,8 +37,17 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-showMatrix($lines, '');
-exit;
+$blocks[] = $lines;
+
+foreach($blocks as $current_block)
+{
+	$new_block = [];
+	foreach($current_block as $x)
+	{
+		$new_block[] = copyRow($x);
+	}
+}
+$blocks[] = $new_block;
 
 $grid = buildGridFromArray($lines);
 
