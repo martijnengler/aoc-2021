@@ -34,6 +34,12 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
+// TODO: this assumed we start with a 10x10 grid,
+// but for real input we start with a 100x100
+//
+// so we need to actually do the work to expand this the right way
+$original_count = count($lines);
+
 reset($lines);
 // do not call $something $line because of the by ref above
 foreach($lines as $something)
@@ -42,19 +48,19 @@ foreach($lines as $something)
 	$lines[] = $copy_line;
 }
 
-foreach(array_slice($lines, 10, 10) as $something)
+foreach(array_slice($lines, 1 * $original_count, $original_count) as $something)
 {
 	$copy_line = copyRow($something);
 	$lines[] = $copy_line;
 }
 
-foreach(array_slice($lines, 20, 10) as $something)
+foreach(array_slice($lines, 2 * $original_count, $original_count) as $something)
 {
 	$copy_line = copyRow($something);
 	$lines[] = $copy_line;
 }
 
-foreach(array_slice($lines, 30, 10) as $something)
+foreach(array_slice($lines, 3 * $original_count, $original_count) as $something)
 {
 	$copy_line = copyRow($something);
 	$lines[] = $copy_line;
