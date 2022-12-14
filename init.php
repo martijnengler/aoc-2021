@@ -15,6 +15,7 @@ else
 	$input_filename = dirname($argv[0]) . DIRECTORY_SEPARATOR . '/';
 	$input_filename .= (defined('TEST_MODE') && TEST_MODE) ? 'test' : 'input';
 }
+$input = file_get_contents($input_filename);
 $lines = file($input_filename, FILE_IGNORE_NEW_LINES);
 $original_lines = $lines;
 
