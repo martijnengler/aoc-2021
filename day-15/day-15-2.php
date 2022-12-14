@@ -34,23 +34,31 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-$copy_line = $lines[0];
-foreach($lines as &$line)
+reset($lines);
+// do not call $something $line because of the by ref above
+foreach($lines as $something)
 {
-	$copy_line = copyRow($line);
-	$lines_to_add[] = $copy_line;
+	$copy_line = copyRow($something);
+	$lines[] = $copy_line;
 }
 
-$lines = array_merge($lines, $lines_to_add);
-
-$copy_line = $lines[10];
-foreach($lines as &$line)
+foreach(array_slice($lines, 10, 10) as $something)
 {
-	$copy_line = copyRow($line);
-	$lines_to_add[] = $copy_line;
+	$copy_line = copyRow($something);
+	$lines[] = $copy_line;
 }
 
-$lines = array_merge($lines, $lines_to_add);
+foreach(array_slice($lines, 20, 10) as $something)
+{
+	$copy_line = copyRow($something);
+	$lines[] = $copy_line;
+}
+
+foreach(array_slice($lines, 30, 10) as $something)
+{
+	$copy_line = copyRow($something);
+	$lines[] = $copy_line;
+}
 
 showMatrix($lines);
 exit;
