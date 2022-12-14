@@ -34,15 +34,16 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-$current_block = $lines;
-foreach($current_block as $row)
+$copy_line = $lines[0];
+foreach($lines as &$line)
 {
-	$copy_line = copyRow($row);
-	$new_block[] = $copy_line;
+	$copy_line = copyRow($line);
+	$lines_to_add[] = $copy_line;
 }
-$current_block = array_merge($current_block, $new_block);
 
-showMatrix($current_block);
+$lines = array_merge($lines, $lines_to_add);
+
+showMatrix($lines);
 
 exit;
 
