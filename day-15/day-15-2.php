@@ -43,8 +43,16 @@ foreach($lines as &$line)
 
 $lines = array_merge($lines, $lines_to_add);
 
-showMatrix($lines);
+$copy_line = $lines[10];
+foreach($lines as &$line)
+{
+	$copy_line = copyRow($line);
+	$lines_to_add[] = $copy_line;
+}
 
+$lines = array_merge($lines, $lines_to_add);
+
+showMatrix($lines);
 exit;
 
 $grid = buildGridFromArray($lines);
