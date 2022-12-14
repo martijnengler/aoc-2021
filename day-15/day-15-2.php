@@ -60,15 +60,14 @@ foreach(array_slice($lines, 30, 10) as $something)
 	$lines[] = $copy_line;
 }
 
-showMatrix($lines);
-exit;
-
 $grid = buildGridFromArray($lines);
 
 $start = new Node(0,0);
 $goal  = new Node(count($grid->grid) - 1, count($grid->grid) - 1);
 
 list($came_from, $cost_so_far) = dijkstra_search($grid, $start, $goal);
+printf("%d\n", array_pop($cost_so_far));
+exit;
 
 draw_grid(
 	$grid,
