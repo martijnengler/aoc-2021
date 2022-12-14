@@ -37,17 +37,17 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-$blocks[] = $lines;
-
-foreach($blocks as $current_block)
+$current_block = $lines;
+foreach($current_block as $row)
 {
-	$new_block = [];
-	foreach($current_block as $x)
-	{
-		$new_block[] = copyRow($x);
-	}
+	$copy_line = copyRow($row);
+	$new_block[] = $copy_line;
 }
-$blocks[] = $new_block;
+$current_block = array_merge($current_block, $new_block);
+
+showMatrix($current_block);
+
+exit;
 
 $grid = buildGridFromArray($lines);
 
