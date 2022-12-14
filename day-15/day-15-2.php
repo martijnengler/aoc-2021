@@ -24,14 +24,11 @@ foreach($lines as &$line)
 	$copies = [];
 	$copy_line = $line;
 
-	$copy_line = copyRow($copy_line);
-	$copies[] = $copy_line;
-	$copy_line = copyRow($copy_line);
-	$copies[] = $copy_line;
-	$copy_line = copyRow($copy_line);
-	$copies[] = $copy_line;
-	$copy_line = copyRow($copy_line);
-	$copies[] = $copy_line;
+	for($i = 0; $i < 4; $i++)
+	{
+		$copy_line = copyRow($copy_line);
+		$copies[] = $copy_line;
+	}
 
 	$line =  array_merge($line, arrayFlatten($copies));
 }
@@ -43,29 +40,14 @@ foreach($lines as &$line)
 $original_count = count($lines);
 
 reset($lines);
-// do not call $something $line because of the by ref above
-foreach($lines as $something)
+for($i = 0; $i < 4; $i++)
 {
-	$copy_line = copyRow($something);
-	$lines[] = $copy_line;
-}
-
-foreach(array_slice($lines, 1 * $original_count, $original_count) as $something)
-{
-	$copy_line = copyRow($something);
-	$lines[] = $copy_line;
-}
-
-foreach(array_slice($lines, 2 * $original_count, $original_count) as $something)
-{
-	$copy_line = copyRow($something);
-	$lines[] = $copy_line;
-}
-
-foreach(array_slice($lines, 3 * $original_count, $original_count) as $something)
-{
-	$copy_line = copyRow($something);
-	$lines[] = $copy_line;
+	// do not call $something $line because of the by ref above
+	foreach(array_slice($lines, $i * $original_count, $original_count) as $something)
+	{
+		$copy_line = copyRow($something);
+		$lines[] = $copy_line;
+	}
 }
 
 $grid = buildGridFromArray($lines);
