@@ -1,5 +1,7 @@
 #!/Users/martijnengler/.bin/php
 <?php
+ini_set('memory_limit', '4096M');
+
 // https://adventofcode.com/2021/day/15
 define("TEST_MODE",       true);
 define('AOC_INPUT_FILE',  "");
