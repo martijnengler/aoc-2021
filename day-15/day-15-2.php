@@ -34,8 +34,6 @@ foreach($lines as &$line)
 	$line =  array_merge($line, arrayFlatten($copies));
 }
 
-printf("xxx%s\n", implode("", $lines[0]));
-exit;
 showMatrix($lines, '');
 exit;
 
