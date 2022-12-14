@@ -16,11 +16,3 @@ $goal  = new Node(count($grid->grid) - 1, count($grid->grid) - 1);
 
 list($came_from, $cost_so_far) = dijkstra_search($grid, $start, $goal);
 printf("%d\n", array_pop($cost_so_far));
-exit;
-
-draw_grid(
-	$grid,
-	[
-		'path' => reconstruct_path($came_from, $start, $goal)
-	]
-);
