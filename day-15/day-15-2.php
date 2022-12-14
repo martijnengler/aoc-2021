@@ -17,9 +17,6 @@ function copyRow($row)
 	}, $row);
 }
 
-
-$blocks = [];
-
 foreach($lines as &$line)
 {
 	$copies = [];
