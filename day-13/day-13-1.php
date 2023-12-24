@@ -80,7 +80,7 @@ function fold_y($matrix, $line_index)
 {
 	$bottom = array_splice($matrix, $line_index);
 	// remove the top line, that's the fold line
-	array_pop($bottom);
+	array_shift($bottom);
 
 	$i = 0;
 	while($line = array_pop($bottom))
