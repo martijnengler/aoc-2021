@@ -64,8 +64,25 @@ function makeDots($matrix, $dots)
 	return $matrix;
 }
 
+function fold_y($matrix, $line_index)
+{
+	return $matrix;
+}
+
+function fold_x($matrix, $col_index){}
+
+function fold($matrix, $fold)
+{
+	if($fold['axis'] === 'y')
+	{
+		return fold_y($matrix, $fold['value']);
+	}
+	return fold_x($matrix, $fold['value']);
+}
+
 [$dots, $folds] = parseInput($lines);
 $matrix = buildBasicMatrix($dots);
 $matrix = makeDots($matrix, $dots);
+$matrix = fold($matrix, $folds[0]);
 
 showMatrix($matrix);
