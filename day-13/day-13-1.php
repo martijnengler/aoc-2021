@@ -38,4 +38,19 @@ function parseInput($lines)
 	return [$dots, $folds];
 }
 
+function buildPaper($dots)
+{
+	$matrix = [];
+	// +1 to account for zero indexing
+	$row_count = max(array_column($dots, 'row')) + 1;
+	$col_count = max(array_column($dots, 'col')) + 1;
+
+	$sample_row = array_fill(0, $col_count, '.');
+	for($i = 0; $i < $row_count; $i++)
+	{
+		$matrix[] = $sample_row;
+	}
+}
+
 [$dots, $folds] = parseInput($lines);
+buildPaper($dots);
