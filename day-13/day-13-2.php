@@ -168,8 +168,8 @@ for($i = 0; $i < $c; $i++)
 	}
 }
 
-ob_start();
-showMatrix($matrix);
-$matrix = ob_get_clean();
-
-print str_replace('.', ' ', $matrix);
+foreach($matrix as $row)
+{
+	print(str_replace('.', ' ', implode('', $row)));
+	print PHP_EOL;
+}
