@@ -23,7 +23,8 @@ function parseInput($lines)
 
 		if(!$folds_part)
 		{
-			$dots[] = ['row' => $line[0], 'col' => $line[1]];
+			// note that col/row is reversed from what I usually do!
+			$dots[] = ['col' => $line[0], 'row' => $line[1]];
 		}
 
 		else
@@ -38,7 +39,7 @@ function parseInput($lines)
 	return [$dots, $folds];
 }
 
-function buildPaper($dots)
+function buildBasicMatrix($dots)
 {
 	$matrix = [];
 	// +1 to account for zero indexing
@@ -50,7 +51,21 @@ function buildPaper($dots)
 	{
 		$matrix[] = $sample_row;
 	}
+
+	return $matrix;
+}
+
+function makeDots($matrix, $dots)
+{
+	foreach($dots as $d)
+	{
+		$matrix[$d['row']][$d['col']] = '#';
+	}
+	return $matrix;
 }
 
 [$dots, $folds] = parseInput($lines);
-buildPaper($dots);
+$matrix = buildBasicMatrix($dots);
+$matrix = makeDots($matrix, $dots);
+
+showMatrix($matrix);
