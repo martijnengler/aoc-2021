@@ -89,10 +89,36 @@ function fold_y($matrix, $line_index)
 		$i++;
 	}
 
-	return [$matrix, $bottom];
+	return $matrix;
 }
 
-function fold_x($matrix, $col_index){}
+function fold_x($matrix, $col_index)
+{
+	for($row = 0; $row < count($matrix); $row++)
+	{
+		$right = array_splice($matrix[$row], $col_index);
+		$left  = $matrix[$row];
+
+		// remove the first column
+		array_shift($right);
+
+		// reset indexes
+		$right = array_values($right);
+		$i = count($left) - count($right);
+		while($item = array_pop($right))
+		{
+			if($item === '#')
+			{
+				$left[$i] = '#';
+			}
+			$i++;
+		}
+
+		$matrix[$row] = $left;
+	}
+
+	return $matrix;
+}
 
 function fold($matrix, $fold)
 {
@@ -106,6 +132,7 @@ function fold($matrix, $fold)
 [$dots, $folds] = parseInput($lines);
 $matrix = buildBasicMatrix($dots);
 $matrix = makeDots($matrix, $dots);
-[$matrix, $bottom] = fold($matrix, $folds[0]);
+$matrix = fold($matrix, $folds[0]);
+$matrix = fold($matrix, $folds[1]);
 
 showMatrix($matrix);
