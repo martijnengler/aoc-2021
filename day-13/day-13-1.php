@@ -64,9 +64,32 @@ function makeDots($matrix, $dots)
 	return $matrix;
 }
 
+function mergeLine(array $a, array $b)
+{
+	foreach($a as $k => &$v)
+	{
+		if($v === '#' || $b[$k] === '#')
+		{
+			$v = '#';
+		}
+	}
+	return $a;
+}
+
 function fold_y($matrix, $line_index)
 {
-	return $matrix;
+	$bottom = array_splice($matrix, $line_index);
+	// remove the top line, that's the fold line
+	array_pop($bottom);
+
+	$i = 0;
+	while($line = array_pop($bottom))
+	{
+		$matrix[$i] = mergeLine($line, $matrix[$i]);
+		$i++;
+	}
+
+	return [$matrix, $bottom];
 }
 
 function fold_x($matrix, $col_index){}
@@ -83,6 +106,6 @@ function fold($matrix, $fold)
 [$dots, $folds] = parseInput($lines);
 $matrix = buildBasicMatrix($dots);
 $matrix = makeDots($matrix, $dots);
-$matrix = fold($matrix, $folds[0]);
+[$matrix, $bottom] = fold($matrix, $folds[0]);
 
 showMatrix($matrix);
