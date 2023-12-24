@@ -129,10 +129,19 @@ function fold($matrix, $fold)
 	return fold_x($matrix, $fold['value']);
 }
 
+function countDots($matrix)
+{
+	$sum = 0;
+	foreach($matrix as $row_index => $row)
+	{
+		$sum += array_count_values($row)['#'] ?? 0;
+	}
+	return $sum;
+}
+
 [$dots, $folds] = parseInput($lines);
 $matrix = buildBasicMatrix($dots);
 $matrix = makeDots($matrix, $dots);
 $matrix = fold($matrix, $folds[0]);
-$matrix = fold($matrix, $folds[1]);
 
-showMatrix($matrix);
+printf("%d\n", countDots($matrix));
