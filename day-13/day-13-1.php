@@ -82,7 +82,7 @@ function fold_y($matrix, $line_index)
 	// remove the top line, that's the fold line
 	array_shift($bottom);
 
-	$i = 0;
+	$i = count($matrix) - count($bottom);
 	while($line = array_pop($bottom))
 	{
 		$matrix[$i] = mergeLine($line, $matrix[$i]);
