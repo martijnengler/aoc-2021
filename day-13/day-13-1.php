@@ -7,31 +7,36 @@ define('SPLIT_CHARACTER', ',');
 
 require_once __DIR__ . '/../init.php';
 
-$folds_part = false;
-$dots       = [];
-$folds      = [];
-
-foreach($lines as &$line)
+function parseInput($lines)
 {
-	if($line[0] === '')
+	$folds_part = false;
+	$dots       = [];
+	$folds      = [];
+
+	foreach($lines as &$line)
 	{
-		$folds_part = true;
-		continue;
+		if($line[0] === '')
+		{
+			$folds_part = true;
+			continue;
+		}
+
+		if(!$folds_part)
+		{
+			$dots[] = ['row' => $line[0], 'col' => $line[1]];
+		}
+
+		else
+		{
+			$parts = explode('=', $line[0]);
+			$axis  = substr($parts[0], -1);
+			$value = $parts[1];
+			$folds[] = ['axis' => $axis, 'value' => $value];
+		}
 	}
 
-	if(!$folds_part)
-	{
-		$dots[] = ['row' => $line[0], 'col' => $line[1]];
-	}
-
-	else
-	{
-		$parts = explode('=', $line[0]);
-		$axis  = substr($parts[0], -1);
-		$value = $parts[1];
-		$folds[] = ['axis' => $axis, 'value' => $value];
-	}
+	print_r($dots);
+	print_r($folds);
 }
 
-print_r($dots);
-print_r($folds);
+parseInput($lines);
