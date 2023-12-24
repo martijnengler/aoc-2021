@@ -148,4 +148,28 @@ foreach($folds as $fold)
 	$matrix = fold($matrix, $fold);
 }
 
-printf("%d\n", countDots($matrix));
+$c = count($matrix[0]);
+for($i = 0; $i < $c; $i++)
+{
+	if(in_array('#', array_column($matrix, $i)))
+	{
+		continue;
+	}
+
+	foreach($matrix as &$row)
+	{
+		foreach($row as $col_index => &$val)
+		{
+			if($col_index === $i)
+			{
+				$val = str_repeat(' ', 10);
+			}
+		}
+	}
+}
+
+ob_start();
+showMatrix($matrix);
+$matrix = ob_get_clean();
+
+print str_replace('.', ' ', $matrix);
