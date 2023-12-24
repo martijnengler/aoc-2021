@@ -35,8 +35,7 @@ function parseInput($lines)
 		}
 	}
 
-	print_r($dots);
-	print_r($folds);
+	return [$dots, $folds];
 }
 
-parseInput($lines);
+[$dots, $folds] = parseInput($lines);
