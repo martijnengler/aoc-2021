@@ -1,4 +1,6 @@
 <?php
+ini_set('zend.assertions', 0);
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/../lib/php/libinit.php';
 

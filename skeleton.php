@@ -7,8 +7,8 @@ define('SPLIT_CHARACTER', null);
 
 require_once __DIR__ . '/../init.php';
 
-array_map(fn($x) => $x, $lines);
-array_map(function($x){
+$lines = array_map(fn($x) => $x, $lines);
+$lines = array_map(function($x){
 	return $x;
 }, $lines);
 
